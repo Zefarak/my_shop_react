@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter } from "react-router-dom";
 import { Container, Header, Form, Button} from 'semantic-ui-react';
 import {lookupOptionsNoToken, LOGIN_ENPOINT } from '../helpers/endpoints.js';
 
@@ -9,7 +10,8 @@ class LoginRegisterPage extends React.Component{
         super(props);
         this.state = {
             username: '',
-            password: ''
+            password: '',
+            message: ''
         }
     }
 
@@ -23,17 +25,26 @@ class LoginRegisterPage extends React.Component{
 
     onSubmitForm = (event) => {
         event.preventDefault();
+        const thisComp = this;
         const data = this.state;
         fetch(LOGIN_ENPOINT, lookupOptionsNoToken(data))
         .then(resp=> resp.json())
         .then(respData =>{
             console.log(respData)
-            localStorage.setItem('token', respData.token)
+            if (respData.refresh !== undefined) {
+                localStorage.setItem('token', respData.access)
+                localStorage.setItem('refresh-token', respData.refresh)
+                thisComp.props.history.push("/");
+            } else {
+                thisComp.setState({
+                    message: "No active account found with the given credentials"
+                })
+            }   
         })
     }
 
     render(){
-        const { username, password } = this.state;
+        const { username, password, message } = this.state;
         return (
             <div>
                 <Container style={{ marginTop: '3em' }}>
@@ -49,10 +60,12 @@ class LoginRegisterPage extends React.Component{
                         </Form.Field>
                         <Button onClick={this.onSubmitForm} type='submit'>Submit</Button>
                     </Form>
+                    {message.length > 0 ?
+                    <p>{message}</p>: <p></p>}
                 </Container>
             </div>
         )
     }
 }
 
-export default LoginRegisterPage;
+export default withRouter(LoginRegisterPage);

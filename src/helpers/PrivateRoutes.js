@@ -6,7 +6,7 @@ const fakeAuth = {
     isAuthenticated: false
 }
 
-if (token !== undefined){
+if (token !== null){
     if(token.length > 2){
         fakeAuth.isAuthenticated = true
     }

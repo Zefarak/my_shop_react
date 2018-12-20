@@ -5,7 +5,6 @@ import Navbar from '../../components/Navbar/Navbar.js';
 
 class Homepage extends React.Component {
 
-
     onLogout = () => {
         localStorage.setItem('token', '')
     }
