@@ -1,0 +1,5 @@
+export const RECEIVE_AUTH = 'RECEIVE_AUTH';
+export const REQUEST_AUTH = 'REQUEST_AUTH';
+export const INVALID_AUTH = 'INVALID_AUTH';
+export const RECEIVE_USER = 'RECEIVE_USER';
+export const REQUEST_USER = 'REQUEST_USER';

@@ -1,26 +1,19 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Route, Switch} from 'react-router-dom';
+import Homepage from './views/Homepage/Homepage.js';
+import LoginRegisterPage from './components/LoginRegisterPage.js'
+import PrivateRouter from './helpers/PrivateRoutes.js';
+
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+      <BrowserRouter key='1'>
+      <Switch key='01'>
+        <PrivateRouter key='002' exact path="/" component={Homepage} />
+        <Route key='003' exact path='/login/' component={LoginRegisterPage} />
+      </Switch>
+      </BrowserRouter>
     );
   }
 }
